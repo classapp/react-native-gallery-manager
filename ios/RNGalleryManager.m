@@ -92,7 +92,7 @@ RCT_EXPORT_METHOD(getAssets:(NSDictionary *)params
   // Build the options based on the user request (currently only type of assets)
   PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
   fetchOptions.predicate = predicate;
-  fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+  fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"modificationDate" ascending:NO]];
   
   
   PHFetchResult<PHAsset *> * _Nonnull fetchResults;
@@ -145,6 +145,7 @@ RCT_EXPORT_METHOD(getAssets:(NSDictionary *)params
                         @"mimeType": mimeType ?: @"",
                         @"id": [asset localIdentifier],
                         @"creationDate": [asset creationDate],
+                        @"modificationDate": [asset modificationDate],
                         @"uri": [self buildAssetUri:[asset localIdentifier] extension:extension lowQ:NO],
                         @"lowQualityUri": [self buildAssetUri:[asset localIdentifier] extension:extension lowQ:YES],
                         @"duration": @([asset duration])
