@@ -137,19 +137,50 @@ RCT_EXPORT_METHOD(getAssets:(NSDictionary *)params
     NSString *mimeType = (NSString *)CFBridgingRelease(UTTypeCopyPreferredTagWithClass((__bridge CFStringRef _Nonnull)(uit), kUTTagClassMIMEType));
     CFStringRef extension = UTTypeCopyPreferredTagWithClass((__bridge CFStringRef _Nonnull)(uit), kUTTagClassFilenameExtension);
     
-    [assets addObject:@{
-                        @"type": [self getMediaType:([asset mediaType])],
-                        @"width": @([asset pixelWidth]),
-                        @"height": @([asset pixelHeight]),
-                        @"filename": orgFilename ?: @"",
-                        @"mimeType": mimeType ?: @"",
-                        @"id": [asset localIdentifier],
-                        @"creationDate": [asset creationDate],
-                        @"modificationDate": [asset modificationDate],
-                        @"uri": [self buildAssetUri:[asset localIdentifier] extension:extension lowQ:NO],
-                        @"lowQualityUri": [self buildAssetUri:[asset localIdentifier] extension:extension lowQ:YES],
-                        @"duration": @([asset duration])
-                        }];
+    //    [assets addObject:@{
+    //                        @"type": [self getMediaType:([asset mediaType])],
+    //                        @"width": @([asset pixelWidth]),
+    //                        @"height": @([asset pixelHeight]),
+    //                        @"filename": orgFilename ?: @"",
+    //                        @"mimeType": mimeType ?: @"",
+    //                        @"id": [asset localIdentifier],
+    //                        @"creationDate": [asset creationDate],
+    //                        @"modificationDate": [asset modificationDate],
+    //                        @"uri": [self buildAssetUri:[asset localIdentifier] extension:extension lowQ:NO],
+    //                        @"lowQualityUri": [self buildAssetUri:[asset localIdentifier] extension:extension lowQ:YES],
+    //                        @"duration": @([asset duration])
+    //                        }];
+    //  }
+  
+    if ([asset modificationDate]) {
+      [assets addObject:@{
+                          @"type": [self getMediaType:([asset mediaType])],
+                          @"width": @([asset pixelWidth]),
+                          @"height": @([asset pixelHeight]),
+                          @"filename": orgFilename ?: @"",
+                          @"mimeType": mimeType ?: @"",
+                          @"id": [asset localIdentifier],
+                          @"creationDate": [asset creationDate],
+                          @"modificationDate": [asset modificationDate],
+                          @"uri": [self buildAssetUri:[asset localIdentifier] extension:extension lowQ:NO],
+                          @"lowQualityUri": [self buildAssetUri:[asset localIdentifier] extension:extension lowQ:YES],
+                          @"duration": @([asset duration])
+                          }];
+    } else {
+      [assets addObject:@{
+                          @"type": [self getMediaType:([asset mediaType])],
+                          @"width": @([asset pixelWidth]),
+                          @"height": @([asset pixelHeight]),
+                          @"filename": orgFilename ?: @"",
+                          @"mimeType": mimeType ?: @"",
+                          @"id": [asset localIdentifier],
+                          @"creationDate": [asset creationDate],
+                          @"modificationDate": [asset creationDate],
+                          @"uri": [self buildAssetUri:[asset localIdentifier] extension:extension lowQ:NO],
+                          @"lowQualityUri": [self buildAssetUri:[asset localIdentifier] extension:extension lowQ:YES],
+                          @"duration": @([asset duration])
+                          }];
+    }
   }
   
   // resolve
